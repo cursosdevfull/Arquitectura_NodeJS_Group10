@@ -1,5 +1,5 @@
 export class Schedule {
-  scheduleId: number;
+  id: number;
   duration?: number;
   title?: string;
 }

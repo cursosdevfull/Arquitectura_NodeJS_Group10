@@ -1,3 +1,4 @@
+import { CustomErrorValueObject } from '../errors';
 import { BaseVO } from './base-vo';
 
 export class DateVO extends BaseVO<Date> {
@@ -10,7 +11,9 @@ export class DateVO extends BaseVO<Date> {
     const date = value.getTime();
 
     if (date < now)
-      throw new Error(`${fieldName} must be greater that the current date`);
+      throw new CustomErrorValueObject(
+        `${fieldName} must be greater that the current date`,
+      );
 
     return new DateVO(value);
   }

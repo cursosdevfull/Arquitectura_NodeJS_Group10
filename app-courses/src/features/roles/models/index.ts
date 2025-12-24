@@ -1,2 +1,2 @@
-export * from './role-data';
+export * from './role-data.entity';
 export * from './role-domain';

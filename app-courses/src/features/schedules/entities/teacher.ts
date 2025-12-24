@@ -1,5 +1,5 @@
 export class Teacher {
-  teacherId: number;
+  id: number;
   name?: string;
   lastname?: string;
 }

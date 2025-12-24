@@ -1,0 +1,37 @@
+services:
+  mysql-server:
+    image: mysql:8
+    container_name: mysql-server
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_DATABASE: db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 12345
+    volumes:
+      - vol-mysql-architecture10:/var/lib/mysql
+    networks:
+      - net-architecture10
+
+  mysql-client:
+    image: phpmyadmin
+    container_name: mysql-client
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql-server
+      PMA_USER: user
+      PMA_PASSWORD: 12345
+    networks:
+      - net-architecture10
+
+volumes:
+  vol-mysql-architecture10:
+    driver: local
+    name: vol-mysql-architecture10
+
+networks:
+  net-architecture10:
+    driver: bridge
+    name: net-architecture10

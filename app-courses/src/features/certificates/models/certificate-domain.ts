@@ -1,8 +1,22 @@
 import { NumberVO, DateVO, LengthVO } from '../../../core/value-objects';
 import { Schedule, Student } from '../entities';
 
+type CertificateEssentials = {
+  schedule: Schedule,
+  student: Student,
+  dateEmission: Date,
+}
+
+type CertificateOptionals = {
+  id: number,
+  key: string,
+}
+
+type CertificateProps = CertificateEssentials & Partial<CertificateOptionals>;
+type CertificateUpdated = Partial<CertificateEssentials>
+
 export class Certificate {
-  private readonly certificateId: number;
+  private readonly id: number;
   private schedule: Schedule;
   private student: Student;
   private dateEmission: Date;
@@ -10,31 +24,53 @@ export class Certificate {
   private deletedAt: Date | undefined;
 
   constructor(
-    schedule: Schedule,
-    student: Student,
-    dateEmission: Date,
-    key: string,
+    props: CertificateProps
   ) {
-    NumberVO.create('ScheduleId', schedule.scheduleId, 1);
-    NumberVO.create('StudentId', student.studentId, 1);
-    const dateEmissionVO = DateVO.create('Date', dateEmission);
-    const keyVO = LengthVO.create('Key', key, 10);
+    NumberVO.create('ScheduleId', props.schedule.id, 1);
+    NumberVO.create('StudentId', props.student.id, 1);
+    const dateEmissionVO = DateVO.create('Date', props.dateEmission);
 
-    this.certificateId = Math.floor(Math.random() * 1000);
-    this.schedule = schedule;
-    this.student = student;
+    if (props.key) {
+      const keyVO = LengthVO.create('Key', props.key, 10);
+      this.key = keyVO.value;
+    }
+
+    if (props.id) {
+      this.id = props.id;
+    }
+
+    this.schedule = props.schedule;
+    this.student = props.student;
     this.dateEmission = dateEmissionVO.value;
-    this.key = keyVO.value;
   }
 
   properties() {
     return {
-      certificateId: this.certificateId,
+      id: this.id,
       schedule: this.schedule,
       student: this.student,
       dateEmission: this.dateEmission,
       key: this.key,
       deletedAt: this.deletedAt,
     };
+  }
+
+  update(props: CertificateUpdated) {
+    if (props.schedule) {
+      NumberVO.create('ScheduleId', props.schedule.id, 1);
+      this.schedule = props.schedule;
+    }
+    if (props.student) {
+      NumberVO.create('StudentId', props.student.id, 1);
+      this.student = props.student;
+    }
+    if (props.dateEmission) {
+      const dateEmissionVO = DateVO.create('Date', props.dateEmission);
+      this.dateEmission = dateEmissionVO.value;
+    }
+  }
+
+  delete() {
+    this.deletedAt = new Date();
   }
 }

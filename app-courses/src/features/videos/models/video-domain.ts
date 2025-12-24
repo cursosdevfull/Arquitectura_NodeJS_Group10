@@ -1,22 +1,47 @@
-import { NumberVO } from '../../../core/value-objects/number-vo';
+import { NumberVO } from '../../../core/value-objects';
+import { Session } from '../entities';
+
+type VideoEssentials = {
+  session: Session;
+}
+
+type VideoOptionals = {
+  id: number;
+}
+
+type VideoProps = VideoEssentials & Partial<VideoOptionals>;
+type VideoUpdate = Partial<VideoEssentials>;
 
 export class Video {
-  private readonly videoId: number;
-  private sessionId: number;
+  private readonly id: number;
+  private session: Session;
   private deletedAt: Date | undefined;
 
-  constructor(sessionId: number) {
-    const sessionVO = NumberVO.create('SessionId', sessionId);
+  constructor(props: VideoProps) {
+    NumberVO.create('SessionId', props.session.id, 1);
 
-    this.videoId = Math.floor(Math.random() * 1000);
-    this.sessionId = sessionVO.value;
+    if (props.id) {
+      this.id = props.id;
+    }
+    this.session = props.session;
   }
 
   properties() {
     return {
-      videoId: this.videoId,
-      sessionId: this.sessionId,
+      id: this.id,
+      session: this.session,
       deletedAt: this.deletedAt,
     };
+  }
+
+  update(props: VideoUpdate) {
+    if (props.session) {
+      NumberVO.create('SessionId', props.session.id, 1);
+      this.session = props.session;
+    }
+  }
+
+  delete() {
+    this.deletedAt = new Date();
   }
 }

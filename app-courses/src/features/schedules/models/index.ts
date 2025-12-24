@@ -1,2 +1,2 @@
-export * from './schedule-data';
+export * from './schedule-data.entity';
 export * from './schedule-domain';

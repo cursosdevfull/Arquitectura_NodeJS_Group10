@@ -1,3 +1,4 @@
+import { CustomErrorValueObject } from '../errors';
 import { BaseVO } from './base-vo';
 
 export class LengthVO extends BaseVO<string> {
@@ -6,8 +7,10 @@ export class LengthVO extends BaseVO<string> {
   }
 
   static create(fieldName: string, value: string, min: number) {
-    if (value.length < min)
-      throw new Error(`${fieldName} must be at least ${min} characters long`);
+    if (!value || value.length < min)
+      throw new CustomErrorValueObject(
+        `${fieldName} must be at least ${min} characters long`,
+      );
 
     return new LengthVO(value);
   }

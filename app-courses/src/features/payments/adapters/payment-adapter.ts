@@ -1,46 +1,11 @@
+import { Inject } from '@nestjs/common';
+import { AdapterBase } from '../../../core/generics/adapter';
 import { Payment } from '../models';
 import { PaymentPort } from '../ports';
+import { Repository } from 'typeorm';
 
-export class PaymentAdapter implements PaymentPort {
-  private payments: Payment[] = [];
-
-  save(payment: Payment): void {
-    this.payments.push(payment);
-  }
-
-  getAll(): Payment[] {
-    return this.payments;
-  }
-
-  getOne(paymentId: number): Payment | null {
-    const payment = this.payments.find(
-      (p) => p.properties().paymentId === paymentId,
-    );
-    return payment || null;
-  }
-
-  getByPage(page: number): Payment[] {
-    const pageSize = 10;
-    const startIndex = (page - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
-    return this.payments.slice(startIndex, endIndex);
-  }
-
-  update(paymentId: number, payment: Payment): void {
-    const index = this.payments.findIndex(
-      (p) => p.properties().paymentId === paymentId,
-    );
-    if (index !== -1) {
-      this.payments[index] = payment;
+export class PaymentAdapter extends AdapterBase<Payment> implements PaymentPort {
+    constructor(@Inject("PAYMENT_REPOSITORY") protected repository: Repository<Payment>) {
+        super(repository);
     }
-  }
-
-  delete(paymentId: number): void {
-    const index = this.payments.findIndex(
-      (p) => p.properties().paymentId === paymentId,
-    );
-    if (index !== -1) {
-      this.payments.splice(index, 1);
-    }
-  }
 }

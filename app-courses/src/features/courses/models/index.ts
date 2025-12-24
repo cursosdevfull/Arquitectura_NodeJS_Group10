@@ -1,2 +1,2 @@
-export * from './course-data';
+export * from './course-data.entity';
 export * from './course-domain';

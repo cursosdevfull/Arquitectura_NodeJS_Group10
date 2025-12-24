@@ -1,47 +1,15 @@
-import { Course } from '../models';
+import { Inject } from '@nestjs/common';
+import { AdapterBase } from '../../../core/generics/adapter';
+import { CourseData } from '../models';
 import { CoursePort } from '../ports';
+import { Repository } from 'typeorm';
 
-export class CourseAdapter implements CoursePort {
-  private courses: Course[] = [];
-
-  save(course: Course): void {
-    this.courses.push(course);
-    console.log(this.courses);
+export class CourseAdapter extends AdapterBase<CourseData> implements CoursePort {
+  constructor(@Inject("COURSE_REPOSITORY") protected repository: Repository<CourseData>) {
+    super(repository);
   }
-
-  getAll(): Course[] {
-    return this.courses;
-  }
-
-  getOne(courseId: number): Course | null {
-    const course = this.courses.find(
-      (c) => c.properties().courseId === courseId,
-    );
-    return course || null;
-  }
-
-  getByPage(page: number): Course[] {
-    const pageSize = 10;
-    const startIndex = (page - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
-    return this.courses.slice(startIndex, endIndex);
-  }
-
-  update(courseId: number, course: Course): void {
-    const index = this.courses.findIndex(
-      (c) => c.properties().courseId === courseId,
-    );
-    if (index !== -1) {
-      this.courses[index] = course;
-    }
-  }
-
-  delete(courseId: number): void {
-    const index = this.courses.findIndex(
-      (c) => c.properties().courseId === courseId,
-    );
-    if (index !== -1) {
-      this.courses.splice(index, 1);
-    }
+  async existsCourse(title: string): Promise<boolean> {
+    const course = await this.repository.findOne({ where: { title } as any });
+    return course !== null;
   }
 }

@@ -1,35 +1,10 @@
-import { UserAdapter } from '../adapters';
+import { Inject } from '@nestjs/common';
 import { User } from '../models';
-import { UserPort } from '../ports';
+import type { UserPort } from '../ports';
+import { ApplicationBase } from '../../../core/generics/application';
 
-export class UserApplication {
-  private readonly adapter: UserPort;
-
-  constructor() {
-    this.adapter = new UserAdapter();
-  }
-
-  save(user: User) {
-    this.adapter.save(user);
-  }
-
-  getAll() {
-    return this.adapter.getAll();
-  }
-
-  getOne(userId: number) {
-    return this.adapter.getOne(userId);
-  }
-
-  getByPage(page: number) {
-    return this.adapter.getByPage(page);
-  }
-
-  update(userId: number, user: User) {
-    this.adapter.update(userId, user);
-  }
-
-  delete(userId: number) {
-    this.adapter.delete(userId);
+export class UserApplication extends ApplicationBase<User, UserPort> {
+  constructor(@Inject('UserAdapter') adapter: UserPort) {
+    super(adapter);
   }
 }

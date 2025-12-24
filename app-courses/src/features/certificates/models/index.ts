@@ -1,2 +1,2 @@
-export * from './certificate-data';
+export * from './certificate-data.entity';
 export * from './certificate-domain';

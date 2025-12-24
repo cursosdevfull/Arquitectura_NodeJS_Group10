@@ -1,10 +1,6 @@
-import { Course } from '../models';
+import { PortBase } from 'src/core/generics';
+import { CourseData } from '../models';
 
-export interface CoursePort {
-  save(course: Course): void;
-  getAll(): Course[];
-  getOne(courseId: number): Course | null;
-  getByPage(page: number): Course[];
-  update(courseId: number, course: Course): void;
-  delete(courseId: number): void;
+export interface CoursePort extends PortBase<CourseData> {
+  existsCourse(title: string): Promise<boolean>;
 }

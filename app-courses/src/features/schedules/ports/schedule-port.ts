@@ -1,10 +1,4 @@
+import { PortBase } from '../../../core/generics';
 import { Schedule } from '../models';
 
-export interface SchedulePort {
-  save(schedule: Schedule): void;
-  getAll(): Schedule[];
-  getOne(scheduleId: number): Schedule | null;
-  getByPage(page: number): Schedule[];
-  update(scheduleId: number, schedule: Schedule): void;
-  delete(scheduleId: number): void;
-}
+export interface SchedulePort extends PortBase<Schedule> { }

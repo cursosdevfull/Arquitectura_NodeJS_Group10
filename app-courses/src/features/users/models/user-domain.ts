@@ -1,19 +1,34 @@
 import { LengthVO, EmailVO, ArrayVO } from '../../../core/value-objects';
 import { Role } from '../entities';
 
+type UserEssentials = {
+  name: string;
+  email: string;
+  roles: Role[];
+}
+
+type UserOptionals = {
+  id: number;
+}
+
+type UserProps = UserEssentials & Partial<UserOptionals>;
+type UserUpdate = Partial<UserEssentials>;
+
 export class User {
-  private readonly userId: number;
+  private readonly id: number;
   private name: string;
   private email: string;
   private roles: Role[];
   private deletedAt: Date | undefined;
 
-  constructor(name: string, email: string, roles: Role[]) {
-    const nameVO = LengthVO.create('Name', name, 3);
-    const emailVO = EmailVO.create('Email', email);
-    const rolesVO = ArrayVO.create('Roles', roles);
+  constructor(props: UserProps) {
+    const nameVO = LengthVO.create('Name', props.name, 3);
+    const emailVO = EmailVO.create('Email', props.email);
+    const rolesVO = ArrayVO.create('Roles', props.roles);
 
-    this.userId = Math.floor(Math.random() * 1000);
+    if (props.id) {
+      this.id = props.id;
+    }
     this.name = nameVO.value;
     this.email = emailVO.value;
     this.roles = rolesVO.value;
@@ -21,11 +36,30 @@ export class User {
 
   properties() {
     return {
-      userId: this.userId,
+      id: this.id,
       name: this.name,
       email: this.email,
       roles: this.roles,
       deletedAt: this.deletedAt,
     };
+  }
+
+  update(props: UserUpdate) {
+    if (props.name) {
+      const nameVO = LengthVO.create('Name', props.name, 3);
+      this.name = nameVO.value;
+    }
+    if (props.email) {
+      const emailVO = EmailVO.create('Email', props.email);
+      this.email = emailVO.value;
+    }
+    if (props.roles) {
+      const rolesVO = ArrayVO.create('Roles', props.roles);
+      this.roles = rolesVO.value;
+    }
+  }
+
+  delete() {
+    this.deletedAt = new Date();
   }
 }

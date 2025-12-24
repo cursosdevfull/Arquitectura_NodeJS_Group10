@@ -1,35 +1,10 @@
-import { EnrollmentAdapter } from '../adapters';
+import { Inject } from '@nestjs/common';
 import { Enrollment } from '../models';
-import { EnrollmentPort } from '../ports';
+import type { EnrollmentPort } from '../ports';
+import { ApplicationBase } from '../../../core/generics/application';
 
-export class EnrollmentApplication {
-  private readonly adapter: EnrollmentPort;
-
-  constructor() {
-    this.adapter = new EnrollmentAdapter();
-  }
-
-  save(enrollment: Enrollment) {
-    this.adapter.save(enrollment);
-  }
-
-  getAll() {
-    return this.adapter.getAll();
-  }
-
-  getOne(enrollmentId: number) {
-    return this.adapter.getOne(enrollmentId);
-  }
-
-  getByPage(page: number) {
-    return this.adapter.getByPage(page);
-  }
-
-  update(enrollmentId: number, enrollment: Enrollment) {
-    this.adapter.update(enrollmentId, enrollment);
-  }
-
-  delete(enrollmentId: number) {
-    this.adapter.delete(enrollmentId);
+export class EnrollmentApplication extends ApplicationBase<Enrollment, EnrollmentPort> {
+  constructor(@Inject('EnrollmentAdapter') adapter: EnrollmentPort) {
+    super(adapter);
   }
 }

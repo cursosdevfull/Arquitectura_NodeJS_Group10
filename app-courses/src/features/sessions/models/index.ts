@@ -1,2 +1,2 @@
-export * from './session-data';
+export * from './session-data.entity';
 export * from './session-domain';

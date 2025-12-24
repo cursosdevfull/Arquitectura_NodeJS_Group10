@@ -1,5 +1,5 @@
 export class Student {
-  studentId: number;
+  id: number;
   name?: string;
   lastname?: string;
   country?: string;

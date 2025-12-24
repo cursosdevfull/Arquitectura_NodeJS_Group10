@@ -1,3 +1,4 @@
+import { CustomErrorValueObject } from '../errors';
 import { BaseVO } from './base-vo';
 
 export class ArrayVO<T> extends BaseVO<T[]> {
@@ -7,7 +8,9 @@ export class ArrayVO<T> extends BaseVO<T[]> {
 
   static create<T>(fieldName: string, value: T[], min: number = 1) {
     if (value.length < min)
-      throw new Error(`${fieldName} must have at least ${min} element`);
+      throw new CustomErrorValueObject(
+        `${fieldName} must have at least ${min} element`,
+      );
 
     return new ArrayVO<T>(value);
   }

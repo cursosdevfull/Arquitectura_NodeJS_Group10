@@ -1,3 +1,3 @@
 export class Session {
-  sessionId: number;
+  id: number;
 }

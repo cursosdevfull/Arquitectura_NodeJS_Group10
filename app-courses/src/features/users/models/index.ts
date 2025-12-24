@@ -1,2 +1,2 @@
-export * from './user-data';
+export * from './user-data.entity';
 export * from './user-domain';

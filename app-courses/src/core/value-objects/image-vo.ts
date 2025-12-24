@@ -1,3 +1,4 @@
+import { CustomErrorValueObject } from '../errors';
 import { BaseVO } from './base-vo';
 
 export class ImageVO extends BaseVO<string> {
@@ -7,7 +8,9 @@ export class ImageVO extends BaseVO<string> {
 
   static create(fieldName: string, value: string) {
     if (!value.match(/^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg|webp))$/i))
-      throw new Error(`${fieldName} must be a valid photo URL`);
+      throw new CustomErrorValueObject(
+        `${fieldName} must be a valid photo URL`,
+      );
 
     return new ImageVO(value);
   }

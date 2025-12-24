@@ -1,22 +1,53 @@
 import { LengthVO } from '../../../core/value-objects';
 
+type CourseEssentials = {
+  title: string;
+}
+
+type CourseOptionals = {
+  id: number;
+  deletedAt: Date
+}
+
+type CourseProps = CourseEssentials & Partial<CourseOptionals>;
+type CourseUpdate = Partial<CourseEssentials>;
+
+
 export class Course {
-  private readonly courseId: number;
+  private readonly id: number;
   private title: string;
   private deletedAt: Date | undefined;
 
-  constructor(title: string) {
-    const titleVO = LengthVO.create('Title', title, 3);
+  constructor(props: CourseProps) {
+    const titleVO = LengthVO.create('Title', props.title, 3);
 
-    this.courseId = Math.floor(Math.random() * 1000);
+    if (props.id) {
+      this.id = props.id;
+    }
+
+    if (props.deletedAt) {
+      this.deletedAt = props.deletedAt;
+    }
+
     this.title = titleVO.value;
   }
 
   properties() {
     return {
-      courseId: this.courseId,
+      id: this.id,
       title: this.title,
       deletedAt: this.deletedAt,
     };
+  }
+
+  update(props: CourseUpdate) {
+    if (props.title) {
+      const titleVO = LengthVO.create('Title', props.title, 3);
+      this.title = titleVO.value;
+    }
+  }
+
+  delete() {
+    this.deletedAt = new Date();
   }
 }

@@ -1,2 +1,2 @@
-export * from './enrollment-data';
+export * from './enrollment-data.entity';
 export * from './enrollment-domain';

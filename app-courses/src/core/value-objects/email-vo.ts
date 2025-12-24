@@ -1,3 +1,4 @@
+import { CustomErrorValueObject } from '../errors';
 import { BaseVO } from './base-vo';
 
 export class EmailVO extends BaseVO<string> {
@@ -7,7 +8,9 @@ export class EmailVO extends BaseVO<string> {
 
   static create(fieldName: string, value: string) {
     if (!value.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i))
-      throw new Error(`${fieldName} must be a valid email address`);
+      throw new CustomErrorValueObject(
+        `${fieldName} must be a valid email address`,
+      );
 
     return new EmailVO(value);
   }

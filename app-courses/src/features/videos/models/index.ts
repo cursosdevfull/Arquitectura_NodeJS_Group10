@@ -1,2 +1,2 @@
-export * from './video-data';
+export * from './video-data.entity';
 export * from './video-domain';
