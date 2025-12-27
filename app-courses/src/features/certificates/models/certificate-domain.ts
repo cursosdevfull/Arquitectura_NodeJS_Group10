@@ -10,6 +10,7 @@ type CertificateEssentials = {
 type CertificateOptionals = {
   id: number,
   key: string,
+  deletedAt: Date
 }
 
 type CertificateProps = CertificateEssentials & Partial<CertificateOptionals>;
@@ -37,6 +38,10 @@ export class Certificate {
 
     if (props.id) {
       this.id = props.id;
+    }
+
+    if (props.deletedAt) {
+      this.deletedAt = props.deletedAt;
     }
 
     this.schedule = props.schedule;

@@ -1,10 +1,11 @@
 import { Inject } from '@nestjs/common';
-import { Payment } from '../models';
+import { Payment, PaymentData } from '../models';
 import type { PaymentPort } from '../ports';
 import { ApplicationBase } from '../../../core/generics/application';
+import { PaymentDto } from './dtos';
 
-export class PaymentApplication extends ApplicationBase<Payment, PaymentPort> {
+export class PaymentApplication extends ApplicationBase<Payment, PaymentData, PaymentPort> {
   constructor(@Inject('PaymentAdapter') adapter: PaymentPort) {
-    super(adapter);
+    super(adapter, PaymentDto.fromDomainToData, PaymentDto.fromDataToDomain);
   }
 }

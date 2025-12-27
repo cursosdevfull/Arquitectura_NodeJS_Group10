@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, ManyToMany } from "typeorm";
 import { UserData } from "../../users/models";
 
 @Entity({ name: "role" })
@@ -12,6 +12,6 @@ export class RoleData {
   @Column({ type: "datetime", nullable: true })
   deletedAt: Date | undefined;
 
-  @OneToMany(() => UserData, user => user.role)
+  @ManyToMany(() => UserData, user => user.roles)
   users: UserData[];
 }

@@ -22,7 +22,7 @@ export class Session {
 
   constructor(props: SessionProps) {
     const dateVO = DateVO.create('Session Date', props.sessionDate);
-    const hoursVO = LengthVO.create('Hours', props.hours, 10);
+    const hoursVO = LengthVO.create('Hours', props.hours, 1);
     NumberVO.create('ScheduleId', props.schedule.id, 1);
 
     if (props.id) {
@@ -53,7 +53,7 @@ export class Session {
       this.sessionDate = dateVO.value;
     }
     if (props.hours) {
-      const hoursVO = LengthVO.create('Hours', props.hours, 10);
+      const hoursVO = LengthVO.create('Hours', props.hours, 1);
       this.hours = hoursVO.value;
     }
   }

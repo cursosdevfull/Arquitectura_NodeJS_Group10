@@ -14,6 +14,6 @@ export class SessionUpdateDto {
 
     @IsOptional()
     @IsString()
-    @MinLength(3)
+    @MinLength(1)
     hours?: string;
 }

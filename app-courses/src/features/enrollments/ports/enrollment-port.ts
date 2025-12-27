@@ -1,4 +1,4 @@
 import { PortBase } from '../../../core/generics';
-import { Enrollment } from '../models';
+import { EnrollmentData } from '../models';
 
-export interface EnrollmentPort extends PortBase<Enrollment> { }
+export interface EnrollmentPort extends PortBase<EnrollmentData> { }

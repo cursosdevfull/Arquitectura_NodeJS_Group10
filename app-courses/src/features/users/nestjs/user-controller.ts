@@ -40,19 +40,19 @@ export class UserController {
 
     @Get()
     async getAll() {
-        return await this.app.getAll();
+        return await this.app.getAll(["roles"]);
     }
 
     @Get('/page')
     async getByPage(@Query() query: PageDto) {
         const { currentPage, limit } = query;
-        return await this.app.getByPage(currentPage, limit);
+        return await this.app.getByPage(currentPage, limit, ["roles"]);
     }
 
     @Get(':id')
     async getOne(@Param() params: IdDto) {
         const { id } = params;
-        return await this.app.getOne(id);
+        return await this.app.getOne(id, ["roles"]);
     }
 
     @Put(':id')
@@ -60,7 +60,7 @@ export class UserController {
     async update(@Param() params: IdDto, @Body() body: UserUpdateDto) {
         const { id } = params;
 
-        const user = await this.app.getOne(id);
+        const user = await this.app.getOne(id, ["roles"]);
         if (!user) {
             return {
                 message: 'User not found'
@@ -80,7 +80,7 @@ export class UserController {
     async remove(@Param() params: IdDto) {
         const { id } = params;
 
-        const user = await this.app.getOne(id);
+        const user = await this.app.getOne(id, ["roles"]);
         if (!user) {
             return {
                 message: 'User not found'

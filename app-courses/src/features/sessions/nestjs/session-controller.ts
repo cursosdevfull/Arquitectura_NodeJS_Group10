@@ -40,26 +40,26 @@ export class SessionController {
 
     @Get()
     async getAll() {
-        return await this.app.getAll();
+        return await this.app.getAll(['schedule']);
     }
 
     @Get('/page')
     async getByPage(@Query() query: PageDto) {
         const { currentPage, limit } = query;
-        return await this.app.getByPage(currentPage, limit);
+        return await this.app.getByPage(currentPage, limit, ['schedule']);
     }
 
     @Get(':id')
     async getOne(@Param() params: IdDto) {
         const { id } = params;
-        return await this.app.getOne(id);
+        return await this.app.getOne(id, ['schedule']);
     }
 
     @Put(':id')
     async update(@Param() params: IdDto, @Body() body: SessionUpdateDto) {
         const { id } = params;
 
-        const session = await this.app.getOne(id);
+        const session = await this.app.getOne(id, ['schedule']);
 
         if (!session) return 'Session not found';
         session.update(body);
@@ -72,7 +72,7 @@ export class SessionController {
     async remove(@Param() params: IdDto) {
         const { id } = params;
 
-        const session = await this.app.getOne(id);
+        const session = await this.app.getOne(id, ['schedule']);
         if (!session) {
             return {
                 message: 'Session not found'

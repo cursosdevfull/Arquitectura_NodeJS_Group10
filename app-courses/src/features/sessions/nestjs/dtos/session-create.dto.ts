@@ -14,6 +14,6 @@ export class SessionCreateDto {
 
     @IsNotEmpty()
     @IsString()
-    @MinLength(3)
+    @MinLength(1)
     hours: string;
 }

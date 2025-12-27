@@ -3,6 +3,7 @@ import { Session } from '../entities';
 
 type VideoEssentials = {
   session: Session;
+  videoUrl: string
 }
 
 type VideoOptionals = {
@@ -15,6 +16,7 @@ type VideoUpdate = Partial<VideoEssentials>;
 export class Video {
   private readonly id: number;
   private session: Session;
+  private videoUrl: string;
   private deletedAt: Date | undefined;
 
   constructor(props: VideoProps) {
@@ -24,12 +26,14 @@ export class Video {
       this.id = props.id;
     }
     this.session = props.session;
+    this.videoUrl = props.videoUrl;
   }
 
   properties() {
     return {
       id: this.id,
       session: this.session,
+      videoUrl: this.videoUrl,
       deletedAt: this.deletedAt,
     };
   }
@@ -38,6 +42,9 @@ export class Video {
     if (props.session) {
       NumberVO.create('SessionId', props.session.id, 1);
       this.session = props.session;
+    }
+    if (props.videoUrl) {
+      this.videoUrl = props.videoUrl;
     }
   }
 

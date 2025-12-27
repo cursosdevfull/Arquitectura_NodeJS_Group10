@@ -1,10 +1,11 @@
 import { Inject } from '@nestjs/common';
-import { Certificate } from '../models';
+import { Certificate, CertificateData } from '../models';
 import type { CertificatePort } from '../ports';
 import { ApplicationBase } from '../../../core/generics/application';
+import { CertificateDto } from './dtos';
 
-export class CertificateApplication extends ApplicationBase<Certificate, CertificatePort> {
+export class CertificateApplication extends ApplicationBase<Certificate, CertificateData, CertificatePort> {
   constructor(@Inject('CertificateAdapter') adapter: CertificatePort) {
-    super(adapter);
+    super(adapter, CertificateDto.fromDomainToData, CertificateDto.fromDataToDomain);
   }
 }

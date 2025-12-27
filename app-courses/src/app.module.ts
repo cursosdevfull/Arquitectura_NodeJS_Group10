@@ -12,9 +12,10 @@ import { UserModule } from './features/users/nestjs';
 import { VideoModule } from './features/videos/nestjs';
 import { RoleModule } from './features/roles/nestjs';
 import { CertificateModule } from './features/certificates/nestjs';
+import { CqrsModule } from '@nestjs/cqrs';
 
 @Module({
-  imports: [CourseModule, ScheduleModule, EnrollmentModule, PaymentModule, SessionModule, StudentModule, TeacherModule, UserModule, VideoModule, RoleModule, CertificateModule],
+  imports: [CourseModule, ScheduleModule, EnrollmentModule, PaymentModule, SessionModule, StudentModule, TeacherModule, UserModule, VideoModule, RoleModule, CertificateModule, CqrsModule.forRoot()],
   controllers: [AppController],
   providers: [AppService],
 })

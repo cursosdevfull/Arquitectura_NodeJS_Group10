@@ -30,6 +30,7 @@ export class TeacherController {
         @Body()
         body: TeacherCreateDto,
     ) {
+        console.log("body", body);
         const teacher = new Teacher(body);
         await this.app.save(teacher);
 

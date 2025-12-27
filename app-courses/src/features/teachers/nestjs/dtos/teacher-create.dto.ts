@@ -1,4 +1,3 @@
-import { Type } from 'class-transformer';
 import { ArrayMinSize, IsArray, IsEmail, IsNotEmpty, IsString, IsUrl, MinLength } from 'class-validator';
 
 export class TeacherCreateDto {
@@ -18,7 +17,7 @@ export class TeacherCreateDto {
 
     @IsNotEmpty()
     @IsString()
-    @MinLength(10)
+    @MinLength(7)
     phone: string;
 
     @IsNotEmpty()

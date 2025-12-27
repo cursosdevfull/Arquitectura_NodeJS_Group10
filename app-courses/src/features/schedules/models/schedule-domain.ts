@@ -56,7 +56,7 @@ export class Schedule {
     const requirementsVO = ArrayVO.create('Requirements', props.requirements, 2);
     const frequencyVO = LengthVO.create('Frequency', props.frequency, 10);
     const startVO = DateVO.create('Start Date', props.start);
-    const rangeHoursVO = LengthVO.create('Range Hours', props.rangeHours, 20);
+    const rangeHoursVO = LengthVO.create('Range Hours', props.rangeHours, 5);
     const sloganVO = LengthVO.create('Slogan', props.slogan, 5);
     const titleVO = LengthVO.create('Title', props.title, 5);
     const imageUrlVO = ImageVO.create('ImageUrl', props.imageUrl);

@@ -17,7 +17,7 @@ export class TeacherUpdateDto {
 
     @IsOptional()
     @IsString()
-    @MinLength(10)
+    @MinLength(7)
     phone?: string;
 
     @IsOptional()

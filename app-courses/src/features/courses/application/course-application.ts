@@ -7,7 +7,7 @@ import { CourseDto } from './dtos';
 
 export class CourseApplication extends ApplicationBase<Course, CourseData, CoursePort> {
   constructor(@Inject('CourseAdapter') adapter: CoursePort) {
-    super(adapter);
+    super(adapter, CourseDto.fromDomainToData, CourseDto.fromDataToDomain);
   }
 
   async save(course: Course) {
@@ -21,6 +21,10 @@ export class CourseApplication extends ApplicationBase<Course, CourseData, Cours
     }
 
 
+    await this.adapter.save(CourseDto.fromDomainToData(course) as CourseData);
+  }
+
+  async update(course: Course) {
     await this.adapter.save(CourseDto.fromDomainToData(course) as CourseData);
   }
 }

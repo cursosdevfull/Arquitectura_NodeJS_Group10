@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, JoinColumn, ManyToMany, JoinTable } from "typeorm";
 import { RoleData } from "../../roles/models";
 
 @Entity({ name: "user" })
@@ -15,7 +15,7 @@ export class UserData {
   @Column({ type: "datetime", nullable: true })
   deletedAt: Date | undefined;
 
-  @ManyToOne(() => RoleData, role => role.users)
-  @JoinColumn({ name: "roleId" })
-  role: RoleData;
+  @ManyToMany(() => RoleData, role => role.users)
+  @JoinTable({ name: "rolesByUser" })
+  roles: RoleData[];
 }

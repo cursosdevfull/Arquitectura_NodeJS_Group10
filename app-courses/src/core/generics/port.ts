@@ -2,7 +2,7 @@ import { ResponseByPage } from "../response";
 
 export interface PortBase<T> {
     save(item: T): Promise<void>;
-    getAll(): Promise<T[]>;
-    getOne(id: number): Promise<T | null>;
-    getByPage(page: number, limit: number): Promise<ResponseByPage<T>>;
+    getAll(relations: string[]): Promise<T[]>;
+    getOne(id: number, relations: string[]): Promise<T | null>;
+    getByPage(page: number, limit: number, relations: string[]): Promise<ResponseByPage<T>>;
 }

@@ -1,10 +1,11 @@
 import { Inject } from '@nestjs/common';
-import { Role } from '../models';
+import { Role, RoleData } from '../models';
 import type { RolePort } from '../ports';
 import { ApplicationBase } from '../../../core/generics/application';
+import { RoleDto } from './dtos';
 
-export class RoleApplication extends ApplicationBase<Role, RolePort> {
+export class RoleApplication extends ApplicationBase<Role, RoleData, RolePort> {
   constructor(@Inject('RoleAdapter') adapter: RolePort) {
-    super(adapter);
+    super(adapter, RoleDto.fromDomainToData, RoleDto.fromDataToDomain);
   }
 }

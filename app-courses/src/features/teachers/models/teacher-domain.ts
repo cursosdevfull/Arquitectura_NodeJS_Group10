@@ -44,7 +44,8 @@ export class Teacher {
     const skillsVO = ArrayVO.create('Skills', props.skills);
     const phoneVO = PhoneVO.create('Phone', props.phone);
     const linkedInVO = LinkedInVO.create('LinkedIn', props.linkedIn);
-    const photoUrlVO = ImageVO.create('Photo', props.photoUrl);
+    //const photoUrlVO = ImageVO.create('Photo', props.photoUrl);
+    const photoUrlVO = LengthVO.create('Photo', props.photoUrl, 10);
 
     if (props.id) {
       this.id = props.id;
@@ -100,7 +101,7 @@ export class Teacher {
       this.summary = summaryVO.value;
     }
     if (props.photoUrl) {
-      const photoUrlVO = ImageVO.create('Photo', props.photoUrl);
+      const photoUrlVO = LengthVO.create('Photo', props.photoUrl, 10);
       this.photoUrl = photoUrlVO.value;
     }
     if (props.skills) {

@@ -40,26 +40,26 @@ export class PaymentController {
 
     @Get()
     async getAll() {
-        return await this.app.getAll();
+        return await this.app.getAll(["student", "schedule"]);
     }
 
     @Get('/page')
     async getByPage(@Query() query: PageDto) {
         const { currentPage, limit } = query;
-        return await this.app.getByPage(currentPage, limit);
+        return await this.app.getByPage(currentPage, limit, ["student", "schedule"]);
     }
 
     @Get(':id')
     async getOne(@Param() params: IdDto) {
         const { id } = params;
-        return await this.app.getOne(id);
+        return await this.app.getOne(id, ["student", "schedule"]);
     }
 
     @Put(':id')
     async update(@Param() params: IdDto, @Body() body: PaymentUpdateDto) {
         const { id } = params;
 
-        const payment = await this.app.getOne(id);
+        const payment = await this.app.getOne(id, ["student", "schedule"]);
 
         if (!payment) return 'Payment not found';
         payment.update(body);
@@ -72,7 +72,7 @@ export class PaymentController {
     async remove(@Param() params: IdDto) {
         const { id } = params;
 
-        const payment = await this.app.getOne(id);
+        const payment = await this.app.getOne(id, ["student", "schedule"]);
         if (!payment) {
             return {
                 message: 'Payment not found'

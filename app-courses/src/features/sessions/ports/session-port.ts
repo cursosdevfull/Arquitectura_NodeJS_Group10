@@ -1,4 +1,4 @@
 import { PortBase } from '../../../core/generics';
-import { Session } from '../models';
+import { SessionData } from '../models';
 
-export interface SessionPort extends PortBase<Session> { }
+export interface SessionPort extends PortBase<SessionData> { }

@@ -1,5 +1,5 @@
 import { PortBase } from 'src/core/generics/port';
-import { Certificate } from '../models';
+import { CertificateData } from '../models';
 
-export interface CertificatePort extends PortBase<Certificate> {
+export interface CertificatePort extends PortBase<CertificateData> {
 }

@@ -1,4 +1,4 @@
 import { PortBase } from '../../../core/generics';
-import { Payment } from '../models';
+import { PaymentData } from '../models';
 
-export interface PaymentPort extends PortBase<Payment> { }
+export interface PaymentPort extends PortBase<PaymentData> { }

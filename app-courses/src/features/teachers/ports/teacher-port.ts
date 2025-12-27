@@ -1,4 +1,4 @@
 import { PortBase } from '../../../core/generics';
-import { Teacher } from '../models';
+import { TeacherData } from '../models';
 
-export interface TeacherPort extends PortBase<Teacher> { }
+export interface TeacherPort extends PortBase<TeacherData> { }

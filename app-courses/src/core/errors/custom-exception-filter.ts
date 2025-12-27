@@ -13,6 +13,8 @@ export class CustomExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
 
+    console.log('CustomExceptionFilter caught an error:', exception);
+
     if (exception instanceof CustomError) {
       const errorResponse = {
         statusCode: exception.statusCode,

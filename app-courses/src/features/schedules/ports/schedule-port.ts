@@ -1,4 +1,4 @@
 import { PortBase } from '../../../core/generics';
-import { Schedule } from '../models';
+import { ScheduleData } from '../models';
 
-export interface SchedulePort extends PortBase<Schedule> { }
+export interface SchedulePort extends PortBase<ScheduleData> { }

@@ -1,4 +1,6 @@
-import { IsOptional, IsString, IsDateString } from 'class-validator';
+import { IsOptional, IsDateString } from 'class-validator';
+import { Schedule, Student } from './entities';
+import { Type } from 'class-transformer';
 
 export class CertificateUpdateDto {
     @IsOptional()
@@ -6,6 +8,10 @@ export class CertificateUpdateDto {
     dateEmission?: string;
 
     @IsOptional()
-    @IsString()
-    key?: string;
+    @Type(() => Student)
+    student?: Student;
+
+    @IsOptional()
+    @Type(() => Schedule)
+    schedule?: Schedule;
 }

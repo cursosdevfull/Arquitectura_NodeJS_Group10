@@ -67,7 +67,6 @@ export class CourseController {
 
     const course = await this.app.getOne(id);
     if (!course) return 'Course not found';
-    console.log(course)
     course.update({ title });
 
     await this.app.save(course);
@@ -83,7 +82,7 @@ export class CourseController {
     if (!course) return 'Course not found';
     course.delete();
 
-    await this.app.save(course);
+    await this.app.update(course);
 
     return 'Course deleted';
   }

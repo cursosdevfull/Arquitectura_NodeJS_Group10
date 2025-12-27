@@ -6,7 +6,7 @@ export class PhoneVO extends BaseVO<string> {
   }
 
   static create(fieldName: string, value: string) {
-    if (!value.match(/^\d{10}$/))
+    if (!value.match(/^\d{7,}$/))
       throw new Error(`${fieldName} must be a valid phone`);
 
     return new PhoneVO(value);

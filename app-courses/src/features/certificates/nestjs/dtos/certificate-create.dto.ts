@@ -1,13 +1,15 @@
-import { IsNotEmpty, IsString, IsNumber, IsDateString } from 'class-validator';
+import { IsNotEmpty, IsString, IsDateString } from 'class-validator';
+import { Type } from 'class-transformer';
+import { Schedule, Student } from './entities';
 
 export class CertificateCreateDto {
     @IsNotEmpty()
-    @IsNumber()
-    scheduleId: number;
+    @Type(() => Schedule)
+    schedule: Schedule;
 
     @IsNotEmpty()
-    @IsNumber()
-    studentId: number;
+    @Type(() => Student)
+    student: Student;
 
     @IsNotEmpty()
     @IsDateString()

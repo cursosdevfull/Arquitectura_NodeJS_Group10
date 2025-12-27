@@ -40,19 +40,19 @@ export class VideoController {
 
     @Get()
     async getAll() {
-        return await this.app.getAll();
+        return await this.app.getAll(["session"]);
     }
 
     @Get('/page')
     async getByPage(@Query() query: PageDto) {
         const { currentPage, limit } = query;
-        return await this.app.getByPage(currentPage, limit);
+        return await this.app.getByPage(currentPage, limit, ["session"]);
     }
 
     @Get(':id')
     async getOne(@Param() params: IdDto) {
         const { id } = params;
-        return await this.app.getOne(id);
+        return await this.app.getOne(id, ["session"]);
     }
 
     @Put(':id')
@@ -60,7 +60,7 @@ export class VideoController {
     async update(@Param() params: IdDto, @Body() body: VideoUpdateDto) {
         const { id } = params;
 
-        const video = await this.app.getOne(id);
+        const video = await this.app.getOne(id, ["session"]);
 
         if (!video) {
             return {
@@ -81,7 +81,7 @@ export class VideoController {
     async remove(@Param() params: IdDto) {
         const { id } = params;
 
-        const video = await this.app.getOne(id);
+        const video = await this.app.getOne(id, ["session"]);
         if (!video) {
             return {
                 message: 'Video not found'
