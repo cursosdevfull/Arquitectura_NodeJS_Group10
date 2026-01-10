@@ -35,7 +35,7 @@ export class UserController {
         summary: 'Create a new user',
         statusCode: 200,
         permissions: ["Admin"],
-        guards: [AuthenticationGuard, AuthorizationGuard],
+        //guards: [AuthenticationGuard, AuthorizationGuard],
         responses: [
             { status: 200, description: 'User created successfully.', type: UserCreated, isArray: false },
             { status: 500, description: 'Internal server error.', type: ResponseInternalServerError, isArray: false }
