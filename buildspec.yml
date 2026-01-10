@@ -16,7 +16,8 @@ phases:
       - docker build -t cursoarquitectura10 .
       - docker tag cursoarquitectura10 282865065290.dkr.ecr.us-east-1.amazonaws.com/cursoarquitectura10
     post_build:
-      - docker push 282865065290.dkr.ecr.us-east-1.amazonaws.com/cursoarquitectura10
+      commands:
+        - docker push 282865065290.dkr.ecr.us-east-1.amazonaws.com/cursoarquitectura10
 artifacts:
   files:
     - "Dockerrun.aws.json"
