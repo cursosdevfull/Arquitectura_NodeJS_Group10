@@ -11,6 +11,7 @@ export class StudentDto {
             name: data.name,
             lastname: data.lastname,
             nickname: data.nickname,
+            email: data.email,
             country: data.country
         });
     }
@@ -25,6 +26,7 @@ export class StudentDto {
         data.name = domain.properties().name;
         data.lastname = domain.properties().lastname;
         data.nickname = domain.properties().nickname;
+        data.email = domain.properties().email;
         data.country = domain.properties().country;
         data.deletedAt = domain.properties().deletedAt;
         return data;

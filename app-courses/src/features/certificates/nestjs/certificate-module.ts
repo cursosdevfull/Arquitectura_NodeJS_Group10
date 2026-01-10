@@ -4,6 +4,7 @@ import { CertificateApplication } from '../application';
 import { CertificateAdapter } from '../adapters';
 import { DatabaseModule } from 'src/core/database/database.module';
 import { certificateProviders } from '../adapters/certificate-provider';
+import { AuthModule } from 'src/features/auth';
 
 @Module({
     controllers: [CertificateController],
@@ -18,6 +19,6 @@ import { certificateProviders } from '../adapters/certificate-provider';
         },
         ...certificateProviders
     ],
-    imports: [DatabaseModule],
+    imports: [DatabaseModule, AuthModule],
 })
 export class CertificateModule { }

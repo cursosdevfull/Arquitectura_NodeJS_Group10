@@ -12,6 +12,12 @@ export class UserData {
   @Column({ type: "varchar", length: 150, unique: true })
   email: string;
 
+  @Column({ type: "varchar", length: 255 })
+  password: string;
+
+  @Column({ type: "varchar", length: 255, unique: true })
+  refreshToken: string;
+
   @Column({ type: "datetime", nullable: true })
   deletedAt: Date | undefined;
 

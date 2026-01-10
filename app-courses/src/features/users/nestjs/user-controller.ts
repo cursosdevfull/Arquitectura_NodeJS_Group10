@@ -9,6 +9,7 @@ import {
     Post,
     Put,
     Query,
+    UseGuards,
 } from '@nestjs/common';
 import { UserApplication } from '../application';
 import { User } from '../models';
@@ -16,7 +17,12 @@ import {
     UserCreateDto,
     UserUpdateDto,
 } from './dtos';
-import { IdDto, PageDto } from '../../../core/dtos';
+import { IdDto, PageDto, ResponseInternalServerError } from '../../../core/dtos';
+import { AuthenticationGuard } from '../../../core/guards';
+import { Endpoint, Permissions } from '../../../core/decorators';
+import { AuthorizationGuard } from 'src/core/guards/authorization.guard';
+import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { UserCreated } from './dtos/responses/user-created';
 
 @Controller('user')
 export class UserController {
@@ -24,13 +30,22 @@ export class UserController {
         @Inject('UserApplication') private readonly app: UserApplication,
     ) { }
 
-    @Post()
-    @HttpCode(200)
+    @Endpoint({
+        method: "POST",
+        summary: 'Create a new user',
+        statusCode: 200,
+        permissions: ["Admin"],
+        guards: [AuthenticationGuard, AuthorizationGuard],
+        responses: [
+            { status: 200, description: 'User created successfully.', type: UserCreated, isArray: false },
+            { status: 500, description: 'Internal server error.', type: ResponseInternalServerError, isArray: false }
+        ]
+    })
     async create(
         @Body()
         body: UserCreateDto,
     ) {
-        const user = new User(body);
+        const user = User.create(body);
         await this.app.save(user);
 
         return {
@@ -39,6 +54,8 @@ export class UserController {
     }
 
     @Get()
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     async getAll() {
         return await this.app.getAll(["roles"]);
     }

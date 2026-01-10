@@ -9,6 +9,7 @@ import {
     Post,
     Put,
     Query,
+    UseGuards,
 } from '@nestjs/common';
 import { EnrollmentApplication } from '../application';
 import { Enrollment } from '../models';
@@ -17,6 +18,9 @@ import {
     EnrollmentUpdateDto,
 } from './dtos';
 import { IdDto, PageDto } from '../../../core/dtos';
+import { AuthenticationGuard } from '../../../core/guards';
+import { Permissions } from '../../../core/decorators';
+import { AuthorizationGuard } from 'src/core/guards/authorization.guard';
 
 @Controller('enrollment')
 export class EnrollmentController {
@@ -24,6 +28,8 @@ export class EnrollmentController {
         @Inject('EnrollmentApplication') private readonly app: EnrollmentApplication,
     ) { }
 
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     @Post()
     @HttpCode(200)
     async create(
@@ -38,23 +44,31 @@ export class EnrollmentController {
         };
     }
 
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     @Get()
     async getAll() {
         return await this.app.getAll(["student", "schedule"]);
     }
 
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     @Get('/page')
     async getByPage(@Query() query: PageDto) {
         const { currentPage, limit } = query;
         return await this.app.getByPage(currentPage, limit, ["student", "schedule"]);
     }
 
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     @Get(':id')
     async getOne(@Param() params: IdDto) {
         const { id } = params;
         return await this.app.getOne(id, ["student", "schedule"]);
     }
 
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     @Put(':id')
     async update(@Param() params: IdDto, @Body() body: EnrollmentUpdateDto) {
         const { id } = params;
@@ -68,6 +82,8 @@ export class EnrollmentController {
         return 'Enrollment updated';
     }
 
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     @Delete(':id')
     async remove(@Param() params: IdDto) {
         const { id } = params;

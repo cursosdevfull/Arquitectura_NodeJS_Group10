@@ -4,6 +4,7 @@ import { ScheduleApplication } from '../application';
 import { ScheduleAdapter } from '../adapters';
 import { DatabaseModule } from 'src/core/database/database.module';
 import { scheduleProviders } from '../adapters/schedule-provider';
+import { AuthModule } from 'src/features/auth';
 
 @Module({
     controllers: [ScheduleController],
@@ -18,6 +19,6 @@ import { scheduleProviders } from '../adapters/schedule-provider';
         },
         ...scheduleProviders
     ],
-    imports: [DatabaseModule],
+    imports: [DatabaseModule, AuthModule],
 })
 export class ScheduleModule { }

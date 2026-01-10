@@ -11,6 +11,8 @@ export class UserDto {
             id: data.id,
             name: data.name,
             email: data.email,
+            password: data.password,
+            refreshToken: data.refreshToken,
             roles: data.roles ? data.roles : []
         });
     }
@@ -24,6 +26,8 @@ export class UserDto {
         data.id = domain.properties().id;
         data.name = domain.properties().name;
         data.email = domain.properties().email;
+        data.password = domain.properties().password;
+        data.refreshToken = domain.properties().refreshToken;
         data.roles = domain.properties().roles as RoleData[];
         data.deletedAt = domain.properties().deletedAt;
         return data;

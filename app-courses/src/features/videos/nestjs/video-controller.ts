@@ -9,6 +9,7 @@ import {
     Post,
     Put,
     Query,
+    UseGuards,
 } from '@nestjs/common';
 import { VideoApplication } from '../application';
 import { Video } from '../models';
@@ -17,6 +18,9 @@ import {
     VideoUpdateDto,
 } from './dtos';
 import { IdDto, PageDto } from '../../../core/dtos';
+import { AuthenticationGuard } from '../../../core/guards';
+import { Permissions } from '../../../core/decorators';
+import { AuthorizationGuard } from 'src/core/guards/authorization.guard';
 
 @Controller('video')
 export class VideoController {
@@ -24,6 +28,8 @@ export class VideoController {
         @Inject('VideoApplication') private readonly app: VideoApplication,
     ) { }
 
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     @Post()
     @HttpCode(200)
     async create(
@@ -38,23 +44,31 @@ export class VideoController {
         };
     }
 
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     @Get()
     async getAll() {
         return await this.app.getAll(["session"]);
     }
 
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     @Get('/page')
     async getByPage(@Query() query: PageDto) {
         const { currentPage, limit } = query;
         return await this.app.getByPage(currentPage, limit, ["session"]);
     }
 
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     @Get(':id')
     async getOne(@Param() params: IdDto) {
         const { id } = params;
         return await this.app.getOne(id, ["session"]);
     }
 
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     @Put(':id')
     @HttpCode(200)
     async update(@Param() params: IdDto, @Body() body: VideoUpdateDto) {
@@ -76,6 +90,8 @@ export class VideoController {
         };
     }
 
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     @Delete(':id')
     @HttpCode(200)
     async remove(@Param() params: IdDto) {

@@ -4,6 +4,7 @@ import { StudentApplication } from '../application';
 import { StudentAdapter } from '../adapters';
 import { DatabaseModule } from 'src/core/database/database.module';
 import { studentProviders } from '../adapters/student-provider';
+import { AuthModule } from 'src/features/auth';
 
 @Module({
     controllers: [StudentController],
@@ -18,6 +19,6 @@ import { studentProviders } from '../adapters/student-provider';
         },
         ...studentProviders
     ],
-    imports: [DatabaseModule],
+    imports: [DatabaseModule, AuthModule],
 })
 export class StudentModule { }

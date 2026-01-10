@@ -9,6 +9,7 @@ import {
     Post,
     Put,
     Query,
+    UseGuards,
 } from '@nestjs/common';
 import { ScheduleApplication } from '../application';
 import { Schedule } from '../models';
@@ -17,6 +18,10 @@ import {
     ScheduleUpdateDto,
 } from './dtos';
 import { IdDto, PageDto } from '../../../core/dtos';
+import { AuthenticationGuard } from '../../../core/guards';
+import { Permissions } from '../../../core/decorators';
+import { AuthorizationGuard } from 'src/core/guards/authorization.guard';
+import { ScheduleExpandDto } from './dtos/schedule-expand.dto';
 
 @Controller('schedule')
 export class ScheduleController {
@@ -24,6 +29,8 @@ export class ScheduleController {
         @Inject('ScheduleApplication') private readonly app: ScheduleApplication,
     ) { }
 
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     @Post()
     @HttpCode(200)
     async create(
@@ -38,23 +45,31 @@ export class ScheduleController {
         };
     }
 
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     @Get()
-    async getAll() {
-        return await this.app.getAll();
+    async getAll(@Query() query: ScheduleExpandDto) {
+        return await this.app.getAll(query.expand);
     }
 
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     @Get('/page')
     async getByPage(@Query() query: PageDto) {
         const { currentPage, limit } = query;
         return await this.app.getByPage(currentPage, limit);
     }
 
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     @Get(':id')
     async getOne(@Param() params: IdDto) {
         const { id } = params;
         return await this.app.getOne(id);
     }
 
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     @Put(':id')
     async update(@Param() params: IdDto, @Body() body: ScheduleUpdateDto) {
         const { id } = params;
@@ -68,6 +83,8 @@ export class ScheduleController {
         return 'Schedule updated';
     }
 
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     @Delete(':id')
     async remove(@Param() params: IdDto) {
         const { id } = params;

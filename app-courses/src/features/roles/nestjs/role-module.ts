@@ -4,6 +4,7 @@ import { RoleApplication } from '../application';
 import { RoleAdapter } from '../adapters';
 import { DatabaseModule } from 'src/core/database/database.module';
 import { roleProviders } from '../adapters/role-provider';
+import { AuthModule } from 'src/features/auth';
 
 @Module({
     controllers: [RoleController],
@@ -18,6 +19,6 @@ import { roleProviders } from '../adapters/role-provider';
         },
         ...roleProviders
     ],
-    imports: [DatabaseModule],
+    imports: [DatabaseModule, AuthModule],
 })
 export class RoleModule { }

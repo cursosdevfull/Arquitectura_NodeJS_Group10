@@ -4,6 +4,7 @@ import { EnrollmentApplication } from '../application';
 import { EnrollmentAdapter } from '../adapters';
 import { DatabaseModule } from 'src/core/database/database.module';
 import { enrollmentProviders } from '../adapters/enrollment-provider';
+import { AuthModule } from 'src/features/auth';
 
 @Module({
     controllers: [EnrollmentController],
@@ -18,6 +19,6 @@ import { enrollmentProviders } from '../adapters/enrollment-provider';
         },
         ...enrollmentProviders
     ],
-    imports: [DatabaseModule],
+    imports: [DatabaseModule, AuthModule],
 })
 export class EnrollmentModule { }

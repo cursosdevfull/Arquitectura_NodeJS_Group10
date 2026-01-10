@@ -4,6 +4,7 @@ import { SessionApplication } from '../application';
 import { SessionAdapter } from '../adapters';
 import { DatabaseModule } from 'src/core/database/database.module';
 import { sessionProviders } from '../adapters/session-provider';
+import { AuthModule } from 'src/features/auth';
 
 @Module({
     controllers: [SessionController],
@@ -18,6 +19,6 @@ import { sessionProviders } from '../adapters/session-provider';
         },
         ...sessionProviders
     ],
-    imports: [DatabaseModule],
+    imports: [DatabaseModule, AuthModule],
 })
 export class SessionModule { }

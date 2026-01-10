@@ -9,6 +9,7 @@ import {
     Post,
     Put,
     Query,
+    UseGuards,
 } from '@nestjs/common';
 import { PaymentApplication } from '../application';
 import { Payment } from '../models';
@@ -17,6 +18,9 @@ import {
     PaymentUpdateDto,
 } from './dtos';
 import { IdDto, PageDto } from '../../../core/dtos';
+import { AuthenticationGuard } from '../../../core/guards';
+import { Permissions } from '../../../core/decorators';
+import { AuthorizationGuard } from 'src/core/guards/authorization.guard';
 
 @Controller('payment')
 export class PaymentController {
@@ -24,6 +28,8 @@ export class PaymentController {
         @Inject('PaymentApplication') private readonly app: PaymentApplication,
     ) { }
 
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     @Post()
     @HttpCode(200)
     async create(
@@ -38,23 +44,31 @@ export class PaymentController {
         };
     }
 
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     @Get()
     async getAll() {
         return await this.app.getAll(["student", "schedule"]);
     }
 
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     @Get('/page')
     async getByPage(@Query() query: PageDto) {
         const { currentPage, limit } = query;
         return await this.app.getByPage(currentPage, limit, ["student", "schedule"]);
     }
 
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     @Get(':id')
     async getOne(@Param() params: IdDto) {
         const { id } = params;
         return await this.app.getOne(id, ["student", "schedule"]);
     }
 
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     @Put(':id')
     async update(@Param() params: IdDto, @Body() body: PaymentUpdateDto) {
         const { id } = params;
@@ -68,6 +82,8 @@ export class PaymentController {
         return 'Payment updated';
     }
 
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     @Delete(':id')
     async remove(@Param() params: IdDto) {
         const { id } = params;

@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany, Index } from "typeorm";
 import { EnrollmentData } from "../../enrollments/models";
 import { PaymentData } from "../../payments/models";
 import { CertificateData } from "../../certificates/models";
@@ -16,6 +16,10 @@ export class StudentData {
 
   @Column({ type: "varchar", length: 50 })
   nickname: string;
+
+  @Index("IDX_STUDENT_EMAIL", { unique: true })
+  @Column({ type: "varchar", length: 255, unique: true })
+  email: string;
 
   @Column({ type: "varchar", length: 100 })
   country: string;

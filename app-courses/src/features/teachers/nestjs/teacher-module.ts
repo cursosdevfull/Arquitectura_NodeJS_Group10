@@ -4,6 +4,9 @@ import { TeacherApplication } from '../application';
 import { TeacherAdapter } from '../adapters';
 import { DatabaseModule } from 'src/core/database/database.module';
 import { teacherProviders } from '../adapters/teacher-provider';
+import { CreateTeacherCommandHandler } from '../application/commands/create-teacher.command-handler';
+import { GetAllTeacherQueryHandler } from '../application/queries/get-all-teacher.query-handler';
+import { AuthModule } from 'src/features/auth';
 
 @Module({
     controllers: [TeacherController],
@@ -16,8 +19,10 @@ import { teacherProviders } from '../adapters/teacher-provider';
             provide: 'TeacherAdapter',
             useClass: TeacherAdapter,
         },
-        ...teacherProviders
+        ...teacherProviders,
+        CreateTeacherCommandHandler,
+        GetAllTeacherQueryHandler
     ],
-    imports: [DatabaseModule],
+    imports: [DatabaseModule, AuthModule],
 })
 export class TeacherModule { }

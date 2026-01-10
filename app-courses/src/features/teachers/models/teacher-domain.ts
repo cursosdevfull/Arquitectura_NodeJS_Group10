@@ -2,7 +2,6 @@ import {
   ArrayVO,
   EmailVO,
   LengthVO,
-  ImageVO,
 } from '../../../core/value-objects';
 import { PhoneVO, LinkedInVO } from '../value-objects';
 

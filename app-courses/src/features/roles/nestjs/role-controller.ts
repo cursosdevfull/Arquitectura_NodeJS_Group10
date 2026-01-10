@@ -9,6 +9,7 @@ import {
     Post,
     Put,
     Query,
+    UseGuards,
 } from '@nestjs/common';
 import { RoleApplication } from '../application';
 import { Role } from '../models';
@@ -17,6 +18,9 @@ import {
     RoleUpdateDto,
 } from './dtos';
 import { IdDto, PageDto } from '../../../core/dtos';
+import { AuthenticationGuard } from '../../../core/guards';
+import { Permissions } from '../../../core/decorators';
+import { AuthorizationGuard } from 'src/core/guards/authorization.guard';
 
 @Controller('role')
 export class RoleController {
@@ -26,6 +30,8 @@ export class RoleController {
 
     @Post()
     @HttpCode(200)
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     async create(
         @Body()
         body: RoleCreateDto,
@@ -39,23 +45,31 @@ export class RoleController {
     }
 
     @Get()
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     async getAll() {
         return await this.app.getAll();
     }
 
     @Get('/page')
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     async getByPage(@Query() query: PageDto) {
         const { currentPage, limit } = query;
         return await this.app.getByPage(currentPage, limit);
     }
 
     @Get(':id')
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     async getOne(@Param() params: IdDto) {
         const { id } = params;
         return await this.app.getOne(id);
     }
 
     @Put(':id')
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     async update(@Param() params: IdDto, @Body() body: RoleUpdateDto) {
         const { id } = params;
 
@@ -69,6 +83,8 @@ export class RoleController {
     }
 
     @Delete(':id')
+    @Permissions("Admin")
+    @UseGuards(AuthenticationGuard, AuthorizationGuard)
     async remove(@Param() params: IdDto) {
         const { id } = params;
 
